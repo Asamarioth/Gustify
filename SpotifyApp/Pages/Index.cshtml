@@ -14,3 +14,12 @@
 @Html.ReactInitJavaScript()
 
 @Html.React("TopBox", new { initialData = Model.Tracks.Items })
+
+@if (Model.Previous != null)
+{
+    <a href="@Model.Previous">Previous</a>
+}
+@if (Model.Next != null)
+{
+    <a href="@Model.Next">Next</a>
+}
