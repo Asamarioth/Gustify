@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>53769b6c-3cff-4d8f-a990-33587a8304d2</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNet.Security.OAuth.Spotify" Version="5.0.8" />
+    <PackageReference Include="SpotifyAPI.Web" Version="6.2.0" />
+  </ItemGroup>
 
 </Project>
