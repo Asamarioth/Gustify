@@ -36,12 +36,12 @@ namespace SpotifyApp.Pages
       {
         Tracks = await spotify.Personalization.GetTopTracks(tracksRequest);
       }
+
       catch(APIException e)
       {
         System.Console.WriteLine(e.Message);
         System.Console.WriteLine(e.Response?.StatusCode);
       }
-
       if (Tracks.Next != null)
       {
         Next = Url.Page("Index", new { Offset = offset + LIMIT });

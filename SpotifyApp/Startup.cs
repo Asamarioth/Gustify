@@ -1,9 +1,13 @@
+using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
+using JavaScriptEngineSwitcher.V8;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using React.AspNet;
 using SpotifyAPI.Web;
 using System;
 using System.Collections.Generic;
@@ -24,6 +28,12 @@ namespace SpotifyApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddReact();
+            // Make sure a JS engine is registered, or you will get an error!
+            services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName)
+              .AddV8();
+
             services.AddSingleton(SpotifyClientConfig.CreateDefault());
             services.AddScoped<SpotifyClientBuilder>();
 
@@ -48,7 +58,7 @@ namespace SpotifyApp
               {
                   options.ClientId = Configuration["Spotify:ClientId"];
                   options.ClientSecret = Configuration["Spotify:ClientSecret"];
-                  options.CallbackPath = "/Auth/callback";
+                  //options.CallbackPath = "/Auth/callback";
                   options.SaveTokens = true;
 
                   var scopes = new List<string> {
@@ -78,13 +88,37 @@ namespace SpotifyApp
             }
 
             app.UseHttpsRedirection();
+            // Initialise ReactJS.NET. Must be before static files.
+            app.UseReact(config =>
+            {
+                config
+                        .SetReuseJavaScriptEngines(true)
+                        .SetLoadBabel(true)
+                        .SetLoadReact(true)
+                        .AddScript("~/js/main.jsx");
+                // If you want to use server-side rendering of React components,
+                // add all the necessary JavaScript files here. This includes
+                // your components as well as all of their dependencies.
+                // See http://reactjs.net/ for more information. Example:
+                //config
+                //    .AddScript("~/js/First.jsx")
+                //    .AddScript("~/js/Second.jsx");
+
+                // If you use an external build too (for example, Babel, Webpack,
+                // Browserify or Gulp), you can improve performance by disabling
+                // ReactJS.NET's version of Babel and loading the pre-transpiled
+                // scripts. Example:
+                //config
+                //    .SetLoadBabel(false)
+                //    .AddScriptWithoutTransform("~/Scripts/bundle.server.js");
+            });
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

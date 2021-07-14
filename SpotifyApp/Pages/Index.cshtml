@@ -2,48 +2,15 @@
 @model IndexModel
 @inject SpotifyClientBuilder spotifyBuilder
 @{
-  ViewData["Title"] = "Home";
-  ViewData["Page"] = "index";
+    ViewData["Title"] = "Home";
+    ViewData["Page"] = "index";
 }
 
-<div class="text-center">
-  <h1 class="display-4">
-    Welcome,
-  </h1>
 
-  <table class="pure-table">
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>Name</th>
-        <th>Popularity</th>
-      </tr>
-    </thead>
-    <tbody>
-      @{
-        foreach (var item in Model.Tracks.Items)
-        {
-          <tr>
-                  <td>
-                    @if (item.Album.Images.Any())
-                    {
-                  <img width="100" height="100" src="@item.Album.Images[0].Url">}
-                  </td>
-            <td>
-              @item.Name
-            </td>
-            <td>
-              @item.Popularity
-            </td>
-          </tr>
-        }
-      }
-    </tbody>
-  </table>
-  @if(Model.Previous != null) {
-    <a href="@Model.Previous">Previous</a>
-  }
-  @if(Model.Next != null) {
-    <a href="@Model.Next">Next</a>
-  }
-</div>
+<!-- Load all your scripts normally before calling ReactInitJavaScript -->
+<!-- Assumes minification/combination is configured as per previous section -->
+<script type="module" src="~/js/Main.jsx"></script>
+
+@Html.ReactInitJavaScript()
+
+@Html.React("TopBox", new { initialData = Model.Tracks.Items })
