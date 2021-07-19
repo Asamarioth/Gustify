@@ -7,13 +7,13 @@
 }
 
 
-<!-- Load all your scripts normally before calling ReactInitJavaScript -->
-<!-- Assumes minification/combination is configured as per previous section -->
-<script type="module" src="~/js/Main.jsx"></script>
+<script src="/dist/runtime.js"></script>
+<script src="/dist/vendor.js"></script>
+<script src="/dist/main.js"></script>
 
 @Html.ReactInitJavaScript()
 
-@Html.React("TopBox", new { initialData = Model.Tracks.Items })
+@Html.React("Components.TopBox", new { initialData = Model.Tracks.Items })
 
 @if (Model.Previous != null)
 {

@@ -6,11 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Content\components\main.jsx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AspNet.Security.OAuth.Spotify" Version="5.0.8" />
     <PackageReference Include="JavaScriptEngineSwitcher.Extensions.MsDependencyInjection" Version="3.3.0" />
     <PackageReference Include="JavaScriptEngineSwitcher.V8" Version="3.12.4" />
-    <PackageReference Include="JavaScriptEngineSwitcher.V8.Native.win-x64" Version="3.12.4" />
     <PackageReference Include="Microsoft.ClearScript.V8" Version="7.1.4" />
+    <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.1.4" />
     <PackageReference Include="React.AspNet" Version="5.2.11" />
     <PackageReference Include="SpotifyAPI.Web" Version="6.2.0" />
   </ItemGroup>

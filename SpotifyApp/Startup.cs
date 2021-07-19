@@ -95,7 +95,9 @@ namespace SpotifyApp
                         .SetReuseJavaScriptEngines(true)
                         .SetLoadBabel(true)
                         .SetLoadReact(true)
-                        .AddScript("~/js/main.jsx");
+                        .AddScriptWithoutTransform("~/dist/runtime.js")
+                        .AddScriptWithoutTransform("~/dist/vendor.js")
+                        .AddScriptWithoutTransform("~/dist/main.js");
                 // If you want to use server-side rendering of React components,
                 // add all the necessary JavaScript files here. This includes
                 // your components as well as all of their dependencies.
