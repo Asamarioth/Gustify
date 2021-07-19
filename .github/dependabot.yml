@@ -10,3 +10,8 @@ updates:
     directory: "/SpotifyApp"
     schedule:
       interval: "daily"
+      
+   - package-ecosystem: "npm"
+    directory: "/SpotifyApp"
+    schedule:
+      interval: "daily"
