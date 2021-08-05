@@ -4,55 +4,30 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - SpotifyApp</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
-      integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
-      crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-<div id="layout">
-    <!-- Menu toggle -->
-    <a href="#menu" id="menuLink" class="menu-link">
-        <!-- Hamburger icon -->
-        <span></span>
-    </a>
+    <div id="layout">
 
-    <div id="menu">
-        <div class="pure-menu">
-            <a class="pure-menu-heading" href="#">SpotifyAPI-NET ASP</a>
+        <div id="main">
+            <div class="header">
+                <h1>@ViewData["Title"]</h1>
+                @if (ViewData["Description"] != null)
+                {
+                    <h2>@ViewData["Description"]</h2>
+                }
+            </div>
 
-            <ul class="pure-menu-list">
-                <li class="pure-menu-item @((string)ViewData["Page"] == "index" ? "pure-menu-selected" : "")">
-                  <a class="pure-menu-link" asp-page="Index">Home</a>
-                </li>
-                <li class="pure-menu-item @((string)ViewData["Page"] == "profile" ? "pure-menu-selected" : "")">
-                  <a class="pure-menu-link" asp-page="Profile">Profile</a>
-                </li>
-            </ul>
+            <div class="content">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
         </div>
     </div>
-
-    <div id="main">
-        <div class="header">
-            <h1>@ViewData["Title"]</h1>
-            @if (ViewData["Description"] != null)
-            {
-              <h2>@ViewData["Description"]</h2>
-            }
-        </div>
-
-        <div class="content">
-          <main role="main" class="pb-3">
-              @RenderBody()
-          </main>
-        </div>
-    </div>
-</div>
-
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @RenderSection("Scripts", required: false)
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    @Html.ReactGetScriptPaths()
+   
 </body>
 </html>
