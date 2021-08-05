@@ -1,0 +1,19 @@
+﻿I Artists API
+	1. Get Multiple Artists
+	2. Get an Artist
+	3. Get an Artist's Related Artists 
+	1,2,3 -> https://developer.spotify.com/documentation/web-api/reference/#object-artistobject
+	# W obiekcie Artist znajdują się gatunki przypisane do danego artysty które można potencjalnie wykorzystać
+	# "3" zwraca do 20 podobnych artystów do danego, potencjalne użycie w jakichś rekomendacjach
+II Browse API
+	1. Get Recommendations
+	# Zwraca rekomendacje na podstawie artystów, konkretnych piosenek i innych parametrów
+	1 -> TracksObject (?)
+III Personalization API
+	1. Get a User's Top Artists and Tracks
+	# Zwraca top 1-50 artystów/utworów dla danego użytkownika wedle jakiegoś współczynnika wyliczonego przez Spotify
+	1 -> https://developer.spotify.com/documentation/web-api/reference/#object-trackobject / https://developer.spotify.com/documentation/web-api/reference/#object-artistobject
+IV Playlists API
+	1. Get a List of Current User's Playlists
+	2. Get a Playlist's Items
+	# Pobranie playlist użytkownika i elementów w nich

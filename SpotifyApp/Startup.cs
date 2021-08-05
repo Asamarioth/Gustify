@@ -70,6 +70,7 @@ namespace SpotifyApp
               .AddRazorPagesOptions(options =>
               {
                   options.Conventions.AuthorizeFolder("/", "Spotify");
+                  options.Conventions.AddPageRoute("/Index", "{path?}");
               });
         }
 
@@ -124,6 +125,7 @@ namespace SpotifyApp
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+
             });
         }
     }
