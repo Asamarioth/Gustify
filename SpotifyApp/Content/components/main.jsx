@@ -17,7 +17,7 @@ class Navbar extends Component {
                     <Link to="/">Home</Link>
                 </li>
                 <li>
-                    <Link to="/test">Test</Link>
+                    <Link to="/playlists">Playlisty</Link>
                 </li>
 
             </ul>
@@ -25,10 +25,32 @@ class Navbar extends Component {
     }
 }
 
-class TestComponent extends Component {
+class PlaylistsComponent extends Component {
     render() {
         return (
-            <div><h1 className="font-weight-italic">Testowy Komponent</h1></div>
+            <div><h1 className="font-weight-italic">Playlisty</h1>
+                    <table class="pure-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Owner</th>
+                        </tr>
+                    </thead>
+                    {this.props.playlistsData.map((element) => (
+                        <tr>
+                            <td>
+                                <img
+                                    width="100px"
+                                    height="100px"
+                                    src={element.images[0].url}
+                                ></img>
+                            </td>
+                            <td>{element.name}</td>
+                            <td>{element.owner.displayName}</td>
+                        </tr>
+                    ))}
+                </table></div>
         );
     }
 }
@@ -44,7 +66,7 @@ class HomePage extends Component {
                             <th>Popularity</th>
                         </tr>
                     </thead>
-                    {this.props.initialData.map((element) => (
+                    {this.props.topThingsData.map((element) => (
                         <tr>
                             <td>
                                 <img
@@ -76,10 +98,14 @@ export default class RootComponent extends Component {
 							path="/"
                             component={() => (
                                 <HomePage
-                                    initialData={this.props.initialData}
+                                    topThingsData={this.props.topThingsData}
                                 />
                             )} />
-                        <Route path="/test" component={TestComponent } />
+                        <Route path="/playlists" component={() => (
+                                <PlaylistsComponent
+                                    playlistsData={this.props.playlistsData}
+                                    />
+                                    ) } />
 						<Route
 							path="*"
 							component={({ staticContext }) => {
@@ -105,31 +131,3 @@ export default class RootComponent extends Component {
         return <BrowserRouter>{app}</BrowserRouter>
     }
 }
-
-
-
-
-/*
-            <table class="pure-table">
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Popularity</th>
-                    </tr>
-                </thead>
-                {this.props.initialData.map((element) => (
-                    <tr>
-                        <td>
-                            <img
-                                width="100px"
-                                height="100px"
-                                src={element.album.images[0].url}
-                            ></img>
-                        </td>
-                        <td>{element.name}</td>
-                        <td>{element.popularity}</td>
-                    </tr>
-                ))}
-            </table>
-            */

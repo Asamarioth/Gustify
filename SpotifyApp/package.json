@@ -9,7 +9,6 @@
   "dependencies": {
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
-    "react-helmet": "^6.0.0",
     "react-router-dom": "^5.0.0",
     "react-select": "^3.0.4",
     "reactstrap": "^8.0.0"

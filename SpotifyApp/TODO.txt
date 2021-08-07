@@ -1,0 +1,2 @@
+﻿-Pozbyć się ReactRoutera
+-Przejść na jednostronnicową aplikację, linki zamiast zmieniać stronę zmieniają renderowane komponenty

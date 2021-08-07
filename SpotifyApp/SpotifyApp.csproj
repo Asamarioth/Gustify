@@ -15,6 +15,7 @@
     <PackageReference Include="JavaScriptEngineSwitcher.V8" Version="3.12.4" />
     <PackageReference Include="Microsoft.ClearScript.V8" Version="7.1.4" />
     <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.1.4" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
     <PackageReference Include="React.AspNet" Version="5.2.11" />
     <PackageReference Include="React.Router" Version="5.2.11" />
     <PackageReference Include="SpotifyAPI.Web" Version="6.2.0" />
