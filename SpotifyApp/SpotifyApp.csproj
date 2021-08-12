@@ -18,7 +18,7 @@
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
     <PackageReference Include="React.AspNet" Version="5.2.11" />
     <PackageReference Include="React.Router" Version="5.2.11" />
-    <PackageReference Include="SpotifyAPI.Web" Version="6.2.0" />
+    <PackageReference Include="SpotifyAPI.Web" Version="6.2.1" />
   </ItemGroup>
 
   <ItemGroup>
