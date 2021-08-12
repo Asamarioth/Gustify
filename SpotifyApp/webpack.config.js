@@ -1,5 +1,5 @@
 const path = require('path');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
 module.exports = {
 	entry: './Content/components/expose-components.js',
@@ -34,7 +34,7 @@ module.exports = {
 		],
 	},
 	plugins: [
-		new ManifestPlugin({
+		new WebpackManifestPlugin({
 			fileName: 'asset-manifest.json',
 			generate: (seed, files) => {
 				const manifestFiles = files.reduce((manifest, file) => {

@@ -29,16 +29,18 @@ class PlaylistsPage extends Component {
                         </tr>
                     </thead>
                     {this.props.playlistsData.map((element) => (
-                        <tr>
+                        <tr //key={element.name}
+                        >
                             <td>
                                 <img
                                     width="100px"
                                     height="100px"
-                                    src={element.images[0].url}
+                                    //src={element.images[0].url}
+                                    src={element.image}
                                 ></img>
                             </td>
                             <td>{element.name}</td>
-                            <td>{element.owner.displayName}</td>
+                            <td>{element.displayName}</td>
                         </tr>
                     ))}
                 </table></div>
@@ -59,12 +61,14 @@ class HomePage extends Component {
                     </thead>
                     <tbody>
                         {this.props.topThingsData.map((element) => (
-                            <tr key={element.name}>
+                            <tr //key={element.name}
+                            >
                             <td>
                                 <img
                                     width="100px"
                                     height="100px"
-                                    src={element.album.images[0].url}
+                                    //src={element.album.images[0].url}
+                                    src={element.image}
                                 ></img>
                             </td>
                             <td>{element.name}</td>
@@ -102,8 +106,6 @@ export default class RootComponent extends Component {
                 <div className="jumbotron">
 					<h1 className="display-4">Spotify App</h1>
                     <Navbar onClick={this.setPage} />
-
-
                     <hr className="my-4" />
                     {currentPage}
 				</div>

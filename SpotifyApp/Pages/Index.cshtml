@@ -8,4 +8,4 @@
 
 
 
-@Html.ReactRouter("Components.RootComponent", new { topThingsData = Model.Tracks.Items, playlistsData = Model.Playlists.Items})
+@Html.React("Components.RootComponent", new { topThingsData = Model.temporaryTopTracks, playlistsData = Model.temporaryPlaylists})

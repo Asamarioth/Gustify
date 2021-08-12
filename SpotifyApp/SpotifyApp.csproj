@@ -20,6 +20,10 @@
     <PackageReference Include="React.Router" Version="5.2.11" />
     <PackageReference Include="SpotifyAPI.Web" Version="6.2.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
 	<Target Name="ReactBuild" AfterTargets="Build">
 		<Exec Command="npm i &amp;&amp; npm run build" />
 	</Target>

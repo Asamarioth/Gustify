@@ -69,7 +69,7 @@ namespace SpotifyApp
             services.AddRazorPages()
               .AddRazorPagesOptions(options =>
               {
-                  options.Conventions.AuthorizeFolder("/", "Spotify");
+                 // options.Conventions.AuthorizeFolder("/", "Spotify");
                   options.Conventions.AddPageRoute("/Index", "{path?}");
               });
         }
@@ -96,16 +96,17 @@ namespace SpotifyApp
                         .SetReuseJavaScriptEngines(true)
                         .SetLoadBabel(true)
                         .SetLoadReact(true)
+                       // .AddScript("../Content/components/main.jsx");
                         .AddScriptWithoutTransform("~/dist/runtime.js")
                         .AddScriptWithoutTransform("~/dist/vendor.js")
                         .AddScriptWithoutTransform("~/dist/main.js");
-                // If you want to use server-side rendering of React components,
-                // add all the necessary JavaScript files here. This includes
-                // your components as well as all of their dependencies.
-                // See http://reactjs.net/ for more information. Example:
-                //config
-                //    .AddScript("~/js/First.jsx")
-                //    .AddScript("~/js/Second.jsx");
+                        // If you want to use server-side rendering of React components,
+                        // add all the necessary JavaScript files here. This includes
+                        // your components as well as all of their dependencies.
+                        // See http://reactjs.net/ for more information. Example:
+                        //config
+                        //    .AddScript("~/js/First.jsx")
+                        //    .AddScript("~/js/Second.jsx");
 
                 // If you use an external build too (for example, Babel, Webpack,
                 // Browserify or Gulp), you can improve performance by disabling
