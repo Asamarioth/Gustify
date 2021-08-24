@@ -37,14 +37,14 @@ namespace SpotifyApp.Pages
         public async Task OnGet()
        {
             temporaryTopTracks = new List<TemporaryTopTracks>();
-            TemporaryTopTracks temporaryTop = new TemporaryTopTracks("In fermentum sodales se", "https://i.scdn.co/image/ab67616d0000b2734f361be013b7802a4d8f17b3", "In fermentum sodal", "In fermentum sodales sed.");
+            TemporaryTopTracks temporaryTop = new TemporaryTopTracks("In fermentum sodales se", "https://i.scdn.co/image/ab67616d0000b2734f361be013b7802a4d8f17b3", "Nam libero aenean.", "Nullam at eros non dolor.");
 
 
             temporaryPlaylists = new List<TemporaryPlaylists>();
             TemporaryPlaylists tempPlay = new TemporaryPlaylists("In fermentum sodales sed.", "https://newjams-images.scdn.co/image/ab676477000033ad/dt/v3/discover-weekly/dX3XSnyQK6tslP5sRTbMBoFRPaclWTWrGPnr81BizynnGlIB5MsQ50fm9G_g6nzB8Zt_B10UeIBkqgmkvWQppHmYBp2FYWTjeupLcFGG54I=/NDE6MTE6MzBUODEtODAtMQ==", "Sol");
  
 
-            for(int i=0; i<10;i++)
+            for(int i=0; i<11;i++)
             {
                 temporaryTopTracks.Add(temporaryTop);
                 temporaryPlaylists.Add(tempPlay);

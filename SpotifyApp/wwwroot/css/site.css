@@ -1,3 +1,14 @@
-div {
-    font-family: Georama;
+body {
+    font-family: Georama, Roboto, Arial;
+}
+.card-columns {
+    column-count: auto;
+    text-align: center;
+}
+.card {
+    margin: .1rem;
+}
+.jumbotron-fluid {
+    max-width: 1920px;
+
 }

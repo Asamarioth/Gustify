@@ -47,40 +47,44 @@ class PlaylistsPage extends Component {
         );
     }
 }
+
+class Card extends Component {
+    render() {
+    return(
+        <div className="card" style={{ width: "200px" }}>
+            <img className="card-img-top" src={this.props.content.image} style={{ width: "200px", height:"200px" }} />
+            <div className="card-body text-center">
+            <p className="card-text">{this.props.content.name} </p>  
+            <p className="card-text">{this.props.content.artist} </p>  
+            <p className="card-text">{this.props.content.album} </p>  
+            </div>
+        </div>
+    );
+    }
+}
+
+
 class HomePage extends Component {
+    constructor(props) {
+        super(props)
+    }
+
+
 	render() {
 		return (
-            <div><h1 className="text-danger">Main Page</h1>
-                <table className="pure-table">
-                    <thead>
-                        <tr>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Popularity</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.props.topThingsData.map((element) => (
-                            <tr //key={element.name}
-                            >
-                            <td>
-                                <img
-                                    width="100px"
-                                    height="100px"
-                                    //src={element.album.images[0].url}
-                                    src={element.image}
-                                ></img>
-                            </td>
-                            <td>{element.name}</td>
-                            <td>{element.popularity}</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table></div>
-		);
-	}
+            <div className="container-fluid bg-danger"><h1 className="text-danger">Main Page</h1>
+            <div className="card-columns bg-success">
+                    {this.props.topThingsData.map((element, index) => (
+                        <Card content={element} />
+                    )
+                    )}
+                </div>
+            </div>
+        );
 }
-export default class RootComponent extends Component {
+}
+
+export default class App extends Component {
     constructor(props) {
         super(props)
         this.state = {page: "home"};
@@ -102,8 +106,8 @@ export default class RootComponent extends Component {
         }
 
         return (
-            <div className="container">
-                <div className="jumbotron">
+            <div className="container-fluid bg-secondary">
+                <div className="jumbotron-fluid mx-auto bg-primary" >
 					<h1 className="display-4">Spotify App</h1>
                     <Navbar onClick={this.setPage} />
                     <hr className="my-4" />
@@ -114,3 +118,6 @@ export default class RootComponent extends Component {
        
     }
 }
+
+
+
