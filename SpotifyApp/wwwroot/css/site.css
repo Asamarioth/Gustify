@@ -10,5 +10,102 @@ body {
 }
 .jumbotron-fluid {
     max-width: 1920px;
-
 }
+.login-container {
+    text-align: center;
+}
+
+.example1-appear {
+    opacity: 0;
+  }
+  
+.example1-appear-active {
+    opacity: 1;
+    transition: opacity 5000ms ease-in;
+  }
+
+  .example2-appear {
+    opacity: 0;
+  }
+  
+.example2-appear-active {
+    opacity: 1;
+    transition: opacity 10000ms ease-in;
+  }
+
+  .example3-appear {
+    opacity: 0;
+  }
+  
+.example3-appear-active {
+    opacity: 1;
+    transition: opacity 15000ms ease-in;
+  }
+
+  .example4-appear {
+    opacity: 0;
+  }
+  
+.example4-appear-active {
+    opacity: 1;
+    transition: opacity 20000ms ease-in;
+  }
+
+  .example5-appear {
+    opacity: 0;
+  }
+  
+.example5-appear-active {
+    opacity: 1;
+    transition: opacity 25000ms ease-in;
+  }
+
+  .example6-appear {
+    opacity: 0;
+  }
+  
+.example6-appear-active {
+    opacity: 1;
+    transition: opacity 30000ms ease-in;
+  }
+  .example7-appear {
+    opacity: 0;
+  }
+  
+.example7-appear-active {
+    opacity: 1;
+    transition: opacity 30000ms ease-in;
+  }
+  .example8-appear {
+    opacity: 0;
+  }
+  
+.example8-appear-active {
+    opacity: 1;
+    transition: opacity 30000ms ease-in;
+  }
+  .example9-appear {
+    opacity: 0;
+  }
+  
+.example9-appear-active {
+    opacity: 1;
+    transition: opacity 30000ms ease-in;
+  }
+  .example10-appear {
+    opacity: 0;
+  }
+  
+.example10-appear-active {
+    opacity: 1;
+    transition: opacity 30000ms ease-in;
+  }
+
+  .example11-appear {
+    opacity: 0;
+  }
+  
+.example11-appear-active {
+    opacity: 1;
+    transition: opacity 30000ms ease-in;
+  }

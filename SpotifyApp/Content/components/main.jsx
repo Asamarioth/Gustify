@@ -1,4 +1,5 @@
 ﻿import { Component} from 'react';
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 class Navbar extends Component {
     render() {
@@ -65,29 +66,46 @@ class Card extends Component {
 
 
 class HomePage extends Component {
-    constructor(props) {
-        super(props)
-    }
-
 
 	render() {
+         
 		return (
             <div className="container-fluid bg-danger"><h1 className="text-danger">Main Page</h1>
             <div className="card-columns bg-success">
-                    {this.props.topThingsData.map((element, index) => (
-                        <Card content={element} />
+            <TransitionGroup
+            component={null}
+            appear={true}>
+            {this.props.topThingsData.map((element, index) => (
+            <CSSTransition
+            key={index}
+            timeout={500 * (index +1)}
+            classNames = {"example" + (index + 1)}>
+                        <Card content={element} key={index} />
+                        </CSSTransition>
                     )
                     )}
+               </TransitionGroup>     
                 </div>
             </div>
         );
 }
 }
+class LoginPage extends Component{
+    render() {
+        return (
+            <>
+                <h1>Tytuł aplikacji czy coś</h1>
+                <button className="btn btn-success" onClick={this.props.onClick.bind(this, "home")}>Zaloguj</button>
+            </>
+        )
+    }
+}
+
 
 export default class App extends Component {
     constructor(props) {
         super(props)
-        this.state = {page: "home"};
+        this.state = {page: "notLogged"};
     }
 
     setPage = (pageName) =>  {
@@ -104,13 +122,20 @@ export default class App extends Component {
         else if (this.state.page == "playlist") {
             currentPage = <PlaylistsPage playlistsData={this.props.playlistsData} />;
         }
-
+        else if(this.state.page == "notLogged") {
+            currentPage = <LoginPage onClick={this.setPage}/>;
+            return (
+                <div className="d-flex justify-content-center bg-secondary" style={{height: "100vh"}}>
+                    <div className="my-auto bg-danger login-container">
+                        {currentPage}
+                    </div>
+                    </div>
+            )
+        }
         return (
-            <div className="container-fluid bg-secondary">
+            <div className="container-fluid bg-secondary" style={{height: "100vh"}}>
                 <div className="jumbotron-fluid mx-auto bg-primary" >
-					<h1 className="display-4">Spotify App</h1>
-                    <Navbar onClick={this.setPage} />
-                    <hr className="my-4" />
+                <Navbar onClick={this.setPage} />
                     {currentPage}
 				</div>
             </div>
