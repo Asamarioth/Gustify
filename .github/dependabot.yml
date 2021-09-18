@@ -15,3 +15,5 @@ updates:
     directory: "/SpotifyApp"
     schedule:
       interval: "daily"
+    ignore:
+       - dependency-name: "webpack"
