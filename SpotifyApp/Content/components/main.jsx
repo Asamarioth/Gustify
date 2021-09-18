@@ -2,17 +2,35 @@
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 class Navbar extends Component {
+
+textArray = ["Tekst 1", "Tekst 2", "Tekst 3", "Tekst 4", "Tekst 5"]
+constructor(props) {
+    super(props)
+    this.state={inProp:true}
+}
+    swapInProp = (timeout) => {
+        const timer = setTimeout(() => {         
+            this.setState({inProp:!this.state.inProp})
+        }, timeout);
+        return () => clearTimeout(timer);
+      };
     render() {
         return (
-            <ul>
-                <li>
-                    <button onClick={this.props.onClick.bind(this, "home")}>Home</button>
-                </li>
-                <li>
-                    <button onClick={this.props.onClick.bind(this, "playlist")}>Playlisty</button>
-                </li>
-
-            </ul>
+            <CSSTransition
+            in={this.state.inProp}
+            appear={true}
+            timeout={1000}
+            classNames="text"
+            //coś mi tu umyka ale te timery poniżej muszą być z jakiegoś powodu odwrotnie
+            //ten w onExited odpowiada za to ile czasu tekst pozostaje na ekranie,
+            //a ten w onEntered ile trwa przerwa między wymianą zawartości
+            //timery nmuszą być co najmniej 1100 bo komponent wariuje i natychmiastowo pojawia się i znika
+            onEntered={this.swapInProp(1100)}
+            onExited={this.swapInProp(5000)}
+            >
+                <h1 className="text">{this.textArray[this.props.appState]}</h1>
+            </CSSTransition>
+            
         );
     }
 }
@@ -78,8 +96,8 @@ class HomePage extends Component {
             {this.props.topThingsData.map((element, index) => (
             <CSSTransition
             key={index}
-            timeout={500 * (index +1)}
-            classNames = {"example" + (index + 1)}>
+            timeout={2000}
+            classNames = "card">
                         <Card content={element} key={index} />
                         </CSSTransition>
                     )
@@ -105,12 +123,20 @@ class LoginPage extends Component{
 export default class App extends Component {
     constructor(props) {
         super(props)
-        this.state = {page: "notLogged"};
+        this.state = {page: "notLogged",
+                      appState: 0  };
     }
-
+    
     setPage = (pageName) =>  {
         this.setState({page: pageName});
     }
+    setAppState = (newAppState) => {
+        this.setState({appState: newAppState})
+    }
+    incrementAppState =() => {
+        this.setState({appState: this.state.appState + 1})
+    }
+
 
 
 
@@ -135,7 +161,8 @@ export default class App extends Component {
         return (
             <div className="container-fluid bg-secondary" style={{height: "100vh"}}>
                 <div className="jumbotron-fluid mx-auto bg-primary" >
-                <Navbar onClick={this.setPage} />
+                <Navbar onClick={this.setPage} incrementAppState={this.incrementAppState} appState={this.state.appState} />
+                <h1>{this.state.appState}</h1>
                     {currentPage}
 				</div>
             </div>
@@ -145,4 +172,11 @@ export default class App extends Component {
 }
 
 
-
+//<ul>
+//<li>
+//    <button onClick={this.props.onClick.bind(this, "home")}>Home</button>
+//</li>
+//<li>
+//    <button onClick={this.props.onClick.bind(this, "playlist")}>Playlisty</button>
+//</li>
+//</ul>

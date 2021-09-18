@@ -1,2 +1,0 @@
-﻿-okładki albumów i playlist pobierają się z internetu przy pierwszym uruchomieniu więc potencjalnie trzeba to ukryć jakąś animacją
--w miarę na bieżąco refaktoryzowac ten kod?
