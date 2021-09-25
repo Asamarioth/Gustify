@@ -58,7 +58,7 @@ namespace SpotifyApp
               {
                   options.ClientId = Configuration["Spotify:ClientId"];
                   options.ClientSecret = Configuration["Spotify:ClientSecret"];
-                  //options.CallbackPath = "/Auth/callback";
+                  options.CallbackPath = "/Auth/callback";
                   options.SaveTokens = true;
 
                   var scopes = new List<string> {
@@ -69,7 +69,7 @@ namespace SpotifyApp
             services.AddRazorPages()
               .AddRazorPagesOptions(options =>
               {
-                 // options.Conventions.AuthorizeFolder("/", "Spotify");
+                  options.Conventions.AuthorizeFolder("/", "Spotify");
                   options.Conventions.AddPageRoute("/Index", "{path?}");
               });
         }

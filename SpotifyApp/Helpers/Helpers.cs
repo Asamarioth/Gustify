@@ -15,34 +15,21 @@ namespace SpotifyApp.Helpers
             return randomString;
         }
     }
-
-    public class TemporaryTopTracks
+    public class SimplifiedTopTrack
     {
-        public string name { get; set; }
-        public string image { get; set; }
-        public int popularity { get; set; }
-        public string artist { get; set; }
-        public string album { get; set; }
+        public string artistName;
+        public string imageUri;
+        public string albumName;
+        public string trackName;
+        public int popularity;
 
-        public TemporaryTopTracks(string Name, string Image, string Artist, string Album)
+        public SimplifiedTopTrack(string artistName, string imageUri, string albumName, string trackName, int popularity)
         {
-            name = Name;
-            image = Image;
-            artist = Artist;
-            album = Album;
-        }
-    }
-
-    public class TemporaryPlaylists
-    {
-        public string name { get; set; }
-        public string displayName { get; set; }
-        public string image { get; set; }
-        public TemporaryPlaylists(string Name, string Image, string DisplayName)
-        {
-            name = Name;
-            image = Image;
-            displayName = DisplayName;
+            this.artistName = artistName;
+            this.imageUri = imageUri;
+            this.albumName = albumName;
+            this.trackName = trackName;
+            this.popularity = popularity;
         }
     }
 

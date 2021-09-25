@@ -14,18 +14,17 @@ namespace SpotifyApp.Pages
         private readonly SpotifyClientBuilder _spotifyClientBuilder;
         private readonly IMemoryCache _cache;
 
-        public Paging<SimplePlaylist> Playlists { get; set; }
-        public Paging<FullTrack> Tracks { get; set; }
+       // public Paging<SimplePlaylist> Playlists { get; set; }
+        public List<SimplifiedTopTrack> Tracks { get; set; }
         public string Next { get; set; }
         public string Previous { get; set; }
 
         private string userID;
-        private Paging<SimplePlaylist> cachedPlaylists;
+       // private Paging<SimplePlaylist> cachedPlaylists;
         private Paging<FullTrack> cachedTracks;
 
 
-        public List<TemporaryTopTracks> temporaryTopTracks;
-        public List<TemporaryPlaylists> temporaryPlaylists;
+        private List<SimplifiedTopTrack> simplifiedTopTracks;
 
 
         public IndexModel(SpotifyClientBuilder spotifyClientBuilder, IMemoryCache memoryCache)
@@ -34,7 +33,7 @@ namespace SpotifyApp.Pages
             _cache = memoryCache;
             
         }
-        public async Task OnGet()
+        /*public async Task OnGet()
        {
             temporaryTopTracks = new List<TemporaryTopTracks>();
             TemporaryTopTracks temporaryTop = new TemporaryTopTracks("In fermentum sodales se", "https://i.scdn.co/image/ab67616d0000b2734f361be013b7802a4d8f17b3", "Nam libero aenean.", "Nullam at eros non dolor.");
@@ -54,11 +53,11 @@ namespace SpotifyApp.Pages
 
 
         }
-
-       /* public async Task OnGet()
+        */
+        public async Task OnGet()
          {
 
-              var spotify = await _spotifyClientBuilder.BuildClient();
+             var spotify = await _spotifyClientBuilder.BuildClient();
              userID = User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
              var tracksRequest = new PersonalizationTopRequest
              {
@@ -83,9 +82,9 @@ namespace SpotifyApp.Pages
                      System.Console.WriteLine(e.Response?.StatusCode);
                  }
              }
-             Tracks = cachedTracks;
-
-             if (!_cache.TryGetValue(userID + "_Playlists", out cachedPlaylists))
+             Tracks = SimplifyTopTracks(cachedTracks);
+            Console.WriteLine("");
+            /* if (!_cache.TryGetValue(userID + "_Playlists", out cachedPlaylists))
              {
                  try
                  {
@@ -103,9 +102,27 @@ namespace SpotifyApp.Pages
                      System.Console.WriteLine(e.Response?.StatusCode);
                  }
              }
-             Playlists = cachedPlaylists; 
+             Playlists = cachedPlaylists; */
 
-         }*/
-             
+         }
+        
+        private List<SimplifiedTopTrack> SimplifyTopTracks(Paging<FullTrack> tracks)
+        {
+            List<SimplifiedTopTrack> simplifiedTopTracks = new List<SimplifiedTopTrack>();
+
+            foreach (var item in tracks.Items)
+            {
+                SimplifiedTopTrack tempTrack = new SimplifiedTopTrack(
+                    item.Album.Artists[0].Name,
+                    item.Album.Images[0].Url,
+                    item.Album.Name,
+                    item.Name,
+                    item.Popularity
+                    );
+                simplifiedTopTracks.Add(tempTrack);
+            }
+
+            return simplifiedTopTracks;
+        }
     }
 }
