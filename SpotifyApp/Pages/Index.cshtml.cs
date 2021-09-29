@@ -14,12 +14,17 @@ namespace SpotifyApp.Pages
         private readonly SpotifyClientBuilder _spotifyClientBuilder;
         private readonly IMemoryCache _cache;
 
-        public Paging<SimplePlaylist> Playlists { get; set; }
+        public Dictionary<string, Dictionary<string, int>> Genres { get; set; }
+        public List<SimplifiedPlaylist> Playlists { get; set; }
         public List<SimplifiedTopTrack> Tracks { get; set; }
+
+
         public PrivateUser Me;
         private string userID;
         private Paging<SimplePlaylist> cachedPlaylists;
         private Paging<FullTrack> cachedTracks;
+        private List<SimplifiedPlaylist> cachedSimplifiedPlaylists;
+        private Dictionary<string, Dictionary<string, int>> cachedGenres;
         SpotifyClient spotify;
         public IndexModel(SpotifyClientBuilder spotifyClientBuilder, IMemoryCache memoryCache)
         {
@@ -37,15 +42,15 @@ namespace SpotifyApp.Pages
                  Limit = LIMIT
              };
 
-             if (!_cache.TryGetValue(userID + "_Tracks", out cachedTracks))
+
+            //Cachowanie wszystkich rzeczy których tworzenie wymaga wiêkszej iloœci zapytañ do API
+            var cacheEntryOptions = new MemoryCacheEntryOptions()
+                                    .SetSlidingExpiration(TimeSpan.FromMinutes(30));
+            if (!_cache.TryGetValue(userID + "_Tracks", out cachedTracks))
              {
                  try
                  {
                      cachedTracks = await spotify.Personalization.GetTopTracks(tracksRequest);
-                     var cacheEntryOptions = new MemoryCacheEntryOptions()
-                         // Keep in cache for this time, reset time if accessed.
-                         .SetSlidingExpiration(TimeSpan.FromMinutes(30));
-
                      // Save data in cache.
                      _cache.Set(userID + "_Tracks", cachedTracks, cacheEntryOptions);
                  }
@@ -55,17 +60,12 @@ namespace SpotifyApp.Pages
                      System.Console.WriteLine(e.Response?.StatusCode);
                  }
              }
-             Tracks = SimplifyTopTracks(cachedTracks);
 
             if (!_cache.TryGetValue(userID + "_Playlists", out cachedPlaylists))
              {
                  try
                  {
                      cachedPlaylists = await spotify.Playlists.CurrentUsers();
-                     var cacheEntryOptions = new MemoryCacheEntryOptions()
-                         // Keep in cache for this time, reset time if accessed.
-                         .SetSlidingExpiration(TimeSpan.FromMinutes(30));
-
                      // Save data in cache.
                      _cache.Set(userID + "_Playlists", cachedPlaylists, cacheEntryOptions);
                  }
@@ -75,25 +75,58 @@ namespace SpotifyApp.Pages
                      System.Console.WriteLine(e.Response?.StatusCode);
                  }
              }
-             Playlists = cachedPlaylists;
-            Dictionary<string, Dictionary<string, int>> test = await GetPlaylistsGenres(Playlists);
+
+            if (!_cache.TryGetValue(userID + "_SimplifiedPlaylists", out cachedSimplifiedPlaylists))
+            {
+                try
+                {
+                    cachedSimplifiedPlaylists = SimplifyPlaylists(cachedPlaylists);
+                    // Save data in cache.
+                    _cache.Set(userID + "_SimplifiedPlaylists", cachedSimplifiedPlaylists, cacheEntryOptions);
+                }
+                catch (APIException e)
+                {
+                    System.Console.WriteLine(e.Message);
+                    System.Console.WriteLine(e.Response?.StatusCode);
+                }
+            }
+
+            if (!_cache.TryGetValue(userID + "_Genres", out cachedGenres))
+            {
+                try
+                {
+                    cachedGenres = await GetPlaylistsGenres(cachedPlaylists);
+                    // Save data in cache.
+                    _cache.Set(userID + "_Genres", cachedGenres, cacheEntryOptions);
+                }
+                catch (APIException e)
+                {
+                    System.Console.WriteLine(e.Message);
+                    System.Console.WriteLine(e.Response?.StatusCode);
+                }
+            }
+
+
+            Tracks = SimplifyTopTracks(cachedTracks);
+            Playlists = cachedSimplifiedPlaylists;
+            Genres = cachedGenres;
         }
         
 
         //Upraszcza listê Top Piosenek wybieraj¹c niektóre pola, tego typu lista trafia póŸniej do Reacta 
         private List<SimplifiedTopTrack> SimplifyTopTracks(Paging<FullTrack> tracks)
         {
-            List<SimplifiedTopTrack> simplifiedTopTracks = new List<SimplifiedTopTrack>();
+            var simplifiedTopTracks = new List<SimplifiedTopTrack>();
 
             foreach (var item in tracks.Items)
             {
-                List<string>tempArtists = new List<string>();
+                var tempArtists = new List<string>();
                 foreach(var art in item.Artists)
                 {
                     tempArtists.Add(art.Name);
                 }
 
-                SimplifiedTopTrack tempTrack = new SimplifiedTopTrack(
+                var tempTrack = new SimplifiedTopTrack(
                     tempArtists,
                     item.Album.Images[0].Url,
                     item.Album.Name,
@@ -108,7 +141,7 @@ namespace SpotifyApp.Pages
         //Upraszcza listê playlist wybieraj¹c niektóre pola, tego typu lista trafia póŸniej do Reacta 
         private List<SimplifiedPlaylist> SimplifyPlaylists(Paging<SimplePlaylist> playlists)
         {
-            List<SimplifiedPlaylist> simplifiedPlaylists = new List<SimplifiedPlaylist>();
+            var simplifiedPlaylists = new List<SimplifiedPlaylist>();
 
             foreach(var item in playlists.Items)
             {
@@ -129,14 +162,14 @@ namespace SpotifyApp.Pages
         //nie bêd¹ zgodne z iloœci¹ piosenek
         private async Task<Dictionary<string,Dictionary<string,int>>> GetPlaylistsGenres(Paging<SimplePlaylist> playlists)
         {
-            Dictionary<string, Dictionary<string, int>> genres =new Dictionary<string, Dictionary<string, int>>() ;
+            var genres =new Dictionary<string, Dictionary<string, int>>() ;
             List<SimpPlay> simpPlays = await GetArtistsIdsFromPlaylists(playlists);
            
             
             foreach(var item in simpPlays)
             {
-                Dictionary<string, int> playlistGenres = new Dictionary<string, int>();
-                List<List<string>> artistsRequests = new List<List<string>>();
+                var playlistGenres = new Dictionary<string, int>();
+                var artistsRequests = new List<List<string>>();
 
                 //Dzielê id w grupki po maksymalnie 50, bo taki jest górny limit zapytania do API
                 for(int i = 0; i <= (item.artistId.Count / 50); i++)
@@ -187,12 +220,12 @@ namespace SpotifyApp.Pages
         //Obiekt klasy SimpPlay zawiera w sobie id playlisty i listê id artystów w tej playliœcie
         private async Task<List<SimpPlay>> GetArtistsIdsFromPlaylists(Paging<SimplePlaylist> playlists)
         {
-            List<SimpPlay> simpPlay = new List<SimpPlay>();
+            var simpPlay = new List<SimpPlay>();
             foreach (var item in playlists.Items)
             {
                 if (item.Owner.Id == userID)
                 {
-                    List<string> tempIdList = new List<string>();
+                    var tempIdList = new List<string>();
                     //SimplePlaylist nie zawiera w sobie listy utworów wiêc muszê pobraæ j¹ osobno
                     var playlistTracks = await spotify.Playlists.GetItems(item.Id);
                     await foreach (PlaylistTrack<IPlayableItem> track in spotify.Paginate(playlistTracks))

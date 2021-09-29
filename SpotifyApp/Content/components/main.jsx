@@ -2,6 +2,8 @@
 import {Navbar} from "./navbar.jsx";
 import {HomePage} from "./homePage.jsx";
 import {LoginPage} from './loginPage.jsx';
+import { PlaylistsPage } from './playlistsPage.jsx';
+import { PlaylistGenre } from './playlistGenres.jsx';
 
 
 
@@ -10,7 +12,8 @@ export default class App extends Component {
     constructor(props) {
         super(props)
         this.state = {page: "notLogged",
-                      appState: -1  };
+                      appState: -1,
+                    playlistToDetail:""  };
     }
     cards = []
 
@@ -18,15 +21,19 @@ export default class App extends Component {
     setPage = (pageName) =>  {
         this.setState({page: pageName});
     }
+    setPage = (pageName, caller) => {
+        this.setState({page: pageName})
+        this.setState({playlistToDetail: caller})
+    }
     setAppState = (newAppState) => {
         this.setState({appState: newAppState})
     }
     incrementAppState =() => {
-        this.manageAppState()
+        this.interpretAppState()
         this.setState({appState: this.state.appState + 1})
 
     }
-    manageAppState = () => {
+    interpretAppState = () => {
         if(this.state.appState >= -1 && this.state.appState < 9) {
             this.cards.push({
                 id:this.state.appState + 1, cardContent:this.props.topTracks[this.state.appState + 1]
@@ -41,6 +48,13 @@ export default class App extends Component {
         if (this.state.page == "home") {
             currentPage = <HomePage topTracks={this.cards} appState={this.state.appState} />;
         }
+        else if (this.state.page == "playlists") {
+            currentPage = <PlaylistsPage playlists={this.props.playlists} onClick={this.setPage} />
+        }
+        else if (this.state.page == "genre") {
+            console.log(this.props.genres[this.state.playlistToDetail])
+            currentPage = <PlaylistGenre playlist={this.props.genres[this.state.playlistToDetail]} />
+        }
         else if(this.state.page == "notLogged") {
             currentPage = <LoginPage onClick={this.setPage}/>;
             return (
@@ -51,11 +65,14 @@ export default class App extends Component {
                     </div>
             )
         }
+   
         return (
             <div className="container-fluid bg-secondary" style={{height: "100vh"}}>
                 <div className="jumbotron-fluid mx-auto bg-primary" >
                 <Navbar onClick={this.setPage} incrementAppState={this.incrementAppState} appState={this.state.appState} />
                 <h1 onClick={this.incrementAppState}>{this.state.appState}</h1>
+               <h2 onClick={() => this.setState({page:"playlists"})}>P</h2> 
+               <h2 onClick={() => this.setState({page:"home"})}>H</h2> 
                     {currentPage}
 				</div>
             </div>
