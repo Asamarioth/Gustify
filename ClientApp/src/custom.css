@@ -1,0 +1,66 @@
+body {
+  font-family: Georama, Roboto, Arial;
+  overflow: hidden;
+}
+.card-columns {
+  column-count: auto;
+  text-align: center;
+}
+.card {
+  margin: .1rem;
+  width: 200px !important;
+}
+.playlist-card{
+width: 250px !important;
+}
+.jumbotron-fluid {
+  max-width: 1920px;
+}
+.login-container {
+  text-align: center;
+}
+
+.text {
+text-align: center;
+}
+
+.text-appear-active {
+animation: fadeInRight;
+animation-duration: 1000ms;
+}
+
+.text-enter-active {
+animation: fadeInRight;
+animation-duration: 1000ms;
+}
+
+.test-exit {
+opacity: 1;
+}
+.text-exit-active{
+animation: fadeOutLeft;
+animation-duration: 1000ms;
+}
+.text-exit-done{
+opacity: 0;
+}
+
+
+.card-appear{
+opacity: 0;
+}
+.card-appear-active{
+opacity:1;
+transition: opacity 2s;
+animation:fadeInUpBig;
+animation-duration: 2000ms;
+}
+.card-enter{
+opacity: 0;
+}
+.card-enter-active{
+opacity:1;
+transition: opacity 2s;
+animation:fadeInUpBig;
+animation-duration: 2000ms;
+}
