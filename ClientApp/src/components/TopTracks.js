@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../custom.css'
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import { TrackCard } from './Cards';
+import {CardColumns } from 'reactstrap';
 
 
 //To raczej na pewno da się zrobić lepiej ale obecnie to jest sklejony do kupy kod z poprzedniej wersji aplikacji
@@ -16,9 +17,7 @@ export class TopTracks extends Component {
 
       cards = []
     async componentDidMount() {
-        const request = await fetch("/toptracks")
-        const data = await request.json()
-        this.setState({topTracks:data})
+        this.getData()
     }
     setAppState = (newAppState) => {
         this.setState({appState: newAppState})
@@ -35,10 +34,14 @@ export class TopTracks extends Component {
        })
       }
   }
+  async getData () {
+    const request = await fetch("/toptracks")
+    const data = await request.json()
+    this.setState({topTracks:data})
+  }
     render() {
         return(
             <>
-                        <div className="container-fluid bg-danger">
             <Textbar incrementAppState={this.incrementAppState} appState={this.state.appState} />
 
             <div className="card-columns bg-success">
@@ -57,8 +60,7 @@ export class TopTracks extends Component {
                     )}
                </TransitionGroup>     
                 </div>
-            </div>
-            </>
+                </>
         )
 
     }

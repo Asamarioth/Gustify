@@ -74,9 +74,8 @@ namespace SpotTest.Controllers
             userID = Me.Id;
 
             var Playlists = new List<SimplifiedPlaylist>();
-            Paging<SimplePlaylist> cachedPlaylists;
 
-            if (!_cache.TryGetValue(userID + "_Playlists", out cachedPlaylists))
+            if (!_cache.TryGetValue(userID + "_Playlists", out Paging<SimplePlaylist> cachedPlaylists))
             {
                 try
                 {

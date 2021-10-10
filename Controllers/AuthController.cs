@@ -16,11 +16,10 @@ namespace SpotTest.Controllers
             // Note: the "provider" parameter corresponds to the external
             // authentication provider choosen by the user agent.
 
-
             // Instruct the middleware corresponding to the requested external identity
             // provider to redirect the user agent to its own authorization endpoint.
             // Note: the authenticationScheme parameter must match the value configured in Startup.cs
-            return Challenge(new AuthenticationProperties { RedirectUri = "/" }, "Spotify");
+            return Challenge(new AuthenticationProperties { RedirectUri = "/", AllowRefresh = true }, "Spotify");
         }
 
         [HttpGet("~/signout")]
@@ -30,12 +29,12 @@ namespace SpotTest.Controllers
             // Instruct the cookies middleware to delete the local cookie created
             // when the user agent is redirected from the external identity provider
             // after a successful authentication flow (e.g Google or Facebook).
-            return SignOut(new AuthenticationProperties { RedirectUri = "/" },
+            return SignOut(new AuthenticationProperties { RedirectUri = "/"},
                 CookieAuthenticationDefaults.AuthenticationScheme);
         }
         [HttpGet("~/status")]
         [HttpPost("~/status")]
-        public bool ChechIfUserIsAuthenticated()
+        public bool CheckIfUserIsAuthenticated()
         {
             return User.Identity.IsAuthenticated;
         }
