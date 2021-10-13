@@ -7,7 +7,6 @@ import { FetchData } from './components/FetchData';
 
 import './custom.css'
 import { Login } from './components/Login';
-import { Container } from 'reactstrap';
 import { TopTracks } from './components/TopTracks';
 import { Playlists } from './components/Playlists';
 import { PlaylistDetails } from './components/PlaylistDetails';
