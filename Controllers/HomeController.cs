@@ -138,7 +138,9 @@ namespace SpotTest.Controllers
                 }
             }
 
-            return PlaylistDetails;
+            var dict = from entry in PlaylistDetails orderby entry.Value descending select entry;
+
+            return dict.ToDictionary(x => x.Key, x => x.Value);
         }
 
     }
