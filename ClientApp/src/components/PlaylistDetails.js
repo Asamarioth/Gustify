@@ -38,11 +38,15 @@ export class PlaylistDetails extends Component {
     chartPercent.push(otherCount)
     chartGenres.push("other")
     colours.push("#555555")
-
+    let tempTable = []
+    chartGenres.map((item) => (
+      tempTable.push(item + " 2137")
+    ))
     let options = {
       chart: {
-        width: 800,
-        type: 'donut'
+        width: 1200  ,
+        type: 'donut',
+
       },
       labels: chartGenres,
       fill: {
@@ -54,6 +58,7 @@ export class PlaylistDetails extends Component {
       },
       legend: {
         position: 'right',
+        //customLegendItems:tempTable,
         labels: {
           colors: ['#fff']
         },
@@ -64,6 +69,11 @@ export class PlaylistDetails extends Component {
           rings: {
             strokeWidth: 0
           }
+        },
+        pie: {
+          dataLabels: {
+            minAngleToShowLabel: 5
+          },
         }
       },
       theme: {
@@ -73,7 +83,7 @@ export class PlaylistDetails extends Component {
           shadeIntensity: 0.6
         }
       },
-      colors: colours
+      colors: colours,
     }
     let contents = this.state.loading
       ? <p><em>Loading...</em></p>

@@ -41,7 +41,7 @@ namespace SpotTest.Extensions
                 //Biorę tylko playlisty których właścicielem jest obecny użytkownik
                 if (item.Owner.Id == userID)
                 {
-                    SimplifiedPlaylist simplified = new SimplifiedPlaylist(
+                    var simplified = new SimplifiedPlaylist(
                         item.Id,
                         item.Images[0].Url,
                         item.Name);
