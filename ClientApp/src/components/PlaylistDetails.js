@@ -44,7 +44,7 @@ export class PlaylistDetails extends Component {
     ))
     let options = {
       chart: {
-        width: 1200  ,
+        width: 900  ,
         type: 'donut',
 
       },
@@ -86,7 +86,7 @@ export class PlaylistDetails extends Component {
       colors: colours,
     }
     let contents = this.state.loading
-      ? <p><em>Loading...</em></p>
+      ? <p><em>Ładowanie...</em></p>
       : <Chart options = {
         options
       }
@@ -102,9 +102,9 @@ export class PlaylistDetails extends Component {
       />
 
     return (
-      <>
+      <div className='genres-container'>
         {contents}
-        </>
+        </div>
     )
   }
 

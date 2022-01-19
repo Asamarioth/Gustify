@@ -9,6 +9,9 @@ using Microsoft.Extensions.Caching.Memory;
 using SpotifyAPI.Web;
 using SpotTest.Extensions;
 using SpotifyApp;
+using Gustify.Extensions;
+using MySqlConnector;
+using System.Data;
 
 namespace SpotTest.Controllers
 {
@@ -18,14 +21,16 @@ namespace SpotTest.Controllers
     {
         private readonly SpotifyClientBuilder _spotifyClientBuilder;
         private readonly IMemoryCache _cache;
+        private readonly AppDb _appDb;
         public PrivateUser Me;
         private string userID;
         SpotifyClient spotify;
         private MemoryCacheEntryOptions cacheEntryOptions;
 
 
-        public HomeController(SpotifyClientBuilder spotifyClientBuilder, IMemoryCache memoryCache)
+        public HomeController(SpotifyClientBuilder spotifyClientBuilder, IMemoryCache memoryCache, AppDb db)
         {
+            _appDb = db;
             _spotifyClientBuilder = spotifyClientBuilder;
             _cache = memoryCache;
 
@@ -62,7 +67,12 @@ namespace SpotTest.Controllers
                 }
             }
 
-            Tracks = SimplificationMethods.SimplifyTopTracks(cachedTracks);
+            await _appDb.Connection.OpenAsync();
+
+
+            Tracks = await SimplificationMethods.SimplifyTopTracks(cachedTracks, spotify);
+            Tracks = await GetCommentsForTracks(Tracks);
+
             return Tracks;
         }
 
@@ -105,7 +115,7 @@ namespace SpotTest.Controllers
             var artistsRequests = new List<List<string>>();
 
             //Dzielę id w grupki po maksymalnie 50, bo taki jest górny limit zapytania do API
-            for (int i = 0; i <= (simpPlay.ArtistId.Count / 50); i++)
+            for (int i = 0; i <= ((simpPlay.ArtistId.Count -1) / 50) ; i++)
             {
                 List<string> artistsRequestPart = new List<string>();
                 for (int j = 0; j < 50; j++)
@@ -141,6 +151,34 @@ namespace SpotTest.Controllers
             var dict = from entry in PlaylistDetails orderby entry.Value descending select entry;
 
             return dict.ToDictionary(x => x.Key, x => x.Value);
+        }
+
+
+        private async Task<List<SimplifiedTopTrack>> GetCommentsForTracks(List<SimplifiedTopTrack> topTracks)
+        {
+            string[] genres =
+            {
+                "k-pop", "rock", "metal", "rap", "hip hop", "jazz", "pop"
+            };
+            string genre ="";
+
+            foreach(var track in topTracks)
+            {
+                for(int i=0; i< genres.Length; i++)
+                {  
+                    if (track.Genre.Contains(genres[i], StringComparison.OrdinalIgnoreCase))
+                    {
+                        genre = genres[i];
+                        break;
+                    }
+                }
+                var query = new DbQuery(_appDb);
+                var result = await query.FindAllAsync(genre);
+                Random random = new();
+                int index = random.Next(0, result.Count);
+                track.Comment = result[index].Komentarz;
+            }
+            return topTracks;
         }
 
     }

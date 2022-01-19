@@ -13,14 +13,18 @@ namespace SpotTest.Extensions
         public string AlbumName { get; set; }
         public string TrackName { get; set; }
         public int Popularity { get; set; }
+        public string Genre { get; set; }
+        public string Comment { get; set; }
 
-        public SimplifiedTopTrack(List<string> artistName, string imageUri, string albumName, string trackName, int popularity)
+        public SimplifiedTopTrack(List<string> artistName, string imageUri, string albumName, string trackName, int popularity, string genre)
         {
-            this.ArtistName = artistName;
-            this.ImageUri = imageUri;
-            this.AlbumName = albumName;
-            this.TrackName = trackName;
-            this.Popularity = popularity;
+            ArtistName = artistName;
+            ImageUri = imageUri;
+            AlbumName = albumName;
+            TrackName = trackName;
+            Popularity = popularity;
+            Genre = genre;
+            Comment = "";
         }
     }
 

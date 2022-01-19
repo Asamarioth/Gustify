@@ -1,3 +1,4 @@
+using Gustify.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MySqlConnector;
 using SpotifyAPI.Web;
 using SpotifyApp;
 using System;
@@ -49,12 +51,12 @@ namespace Gustify
                   options.SaveTokens = true;
 
                   var scopes = new List<string> {
-            UserReadEmail, UserReadPrivate, PlaylistReadPrivate, PlaylistReadCollaborative, UserTopRead
+                    UserReadEmail, UserReadPrivate, PlaylistReadPrivate, PlaylistReadCollaborative, UserTopRead
                 };
                   options.Scope.Add(string.Join(",", scopes));
               });
             services.AddControllersWithViews();
-
+            services.AddTransient<AppDb>(_ => new AppDb(Configuration["ConnectionStrings:Default"]));
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

@@ -7,9 +7,9 @@ export class Layout extends Component {
 
   render () {
     return (
-        <Container fluid className="bg-secondary overflow-auto" style={{height:"100vh"}}>
+        <Container fluid className="layout-box overflow-auto">
         <NavMenu />
-        <Jumbotron fluid className="mx-auto bg-primary">
+        <Jumbotron fluid className="mx-auto layout-main">
           {this.props.children}
         </Jumbotron>
         </Container>

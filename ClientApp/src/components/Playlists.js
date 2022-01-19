@@ -21,7 +21,7 @@ export class Playlists extends Component {
     render() {
         return(
 
-            <CardColumns className="bg-success">
+            <CardColumns className="playlist-cards">
 
             {this.state.playlists.map((cardContent, id) => (
                     <PlaylistCard content={cardContent} key={id} />

@@ -9,9 +9,8 @@ namespace SpotTest.Controllers
     public class AuthController : Controller
     {
         [HttpGet("~/signin")]
-        public async Task<IActionResult> SignIn() => View("SignIn", await HttpContext.GetExternalProvidersAsync());
         [HttpPost("~/signin")]
-        public async Task<IActionResult> SignIn(string provider)
+        public async Task<IActionResult> SignIn()
         {
             // Note: the "provider" parameter corresponds to the external
             // authentication provider choosen by the user agent.

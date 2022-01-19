@@ -11,7 +11,8 @@ export class TopTracks extends Component {
         super(props)
         this.state = {
           appState : -1,
-          topTracks : []
+          topTracks : [],
+          comments : [],
         };
       }
 
@@ -38,13 +39,18 @@ export class TopTracks extends Component {
     const request = await fetch("/toptracks")
     const data = await request.json()
     this.setState({topTracks:data})
+    let coms = []
+    this.state.topTracks.map (track => {
+        coms.push(track.comment)
+    })
+    this.setState({comments:coms})
   }
     render() {
         return(
             <>
-            <Textbar incrementAppState={this.incrementAppState} appState={this.state.appState} />
+            <Textbar incrementAppState={this.incrementAppState} appState={this.state.appState} comments={this.state.comments} />
 
-            <div className="card-columns bg-success">
+            <div className="card-columns">
             <TransitionGroup
             component={null}
             appear={true}
@@ -102,7 +108,7 @@ class Textbar extends Component {
                         appear={true}
                         timeout={1000}
                         classNames="text"
-                        onEntered={() => this.swapInPropAndIncrementAppState(9000, false)}
+                        onEntered={() => this.swapInPropAndIncrementAppState(6000, false)}
                         onExited={() => this.swapInPropAndIncrementAppState(1100, true)}
                         >
                             <h1 className="text">{this.welcomeText}</h1>
@@ -129,7 +135,7 @@ class Textbar extends Component {
                         onEntered={() => this.swapInPropAndIncrementAppState(6000, false)}
                         onExited={() => this.swapInPropAndIncrementAppState(1100, true)}
                         >
-                            <h1 className="text">{this.textArray[this.props.appState]}</h1>
+                            <h1 className="text">{this.props.comments[this.props.appState]}</h1>
                         </CSSTransition>
             }
             return (

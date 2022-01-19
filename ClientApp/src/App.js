@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout';
-import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
 
 
@@ -27,7 +26,7 @@ export default class App extends Component {
 
 
     if(!this.state.loggedIn) {
-      return( <div className="d-flex justify-content-center bg-secondary" style={{height: "100vh"}}><Login></Login>
+      return( <div className="d-flex justify-content-center login-container" style={{height: "100vh"}}><Login></Login>
        <Route path='/signin' component={() => { 
      window.location.href = 'https://localhost:44398/signin'; 
      return null;
@@ -35,7 +34,7 @@ export default class App extends Component {
     }
     return (
       <Layout>
-        <Route exact path='/' component={Home} />
+        <Route exact path='/' component={Playlists} />
         <Route path='/top' component={TopTracks} />
         <Route path='/fetch-data' component={FetchData} />
         <Route path='/plays' component={Playlists} />

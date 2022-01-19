@@ -1,6 +1,7 @@
 body {
   font-family: Georama, Roboto, Arial;
   overflow: hidden;
+  color:#e8e6e3;
 }
 .card-columns {
   column-count: auto;
@@ -9,9 +10,11 @@ body {
 .card {
   margin: .1rem;
   width: 200px !important;
+  background-color: #596164 !important;
 }
 .playlist-card{
 width: 250px !important;
+
 }
 .jumbotron-fluid {
   max-width: 1920px;
@@ -67,4 +70,44 @@ animation-duration: 2000ms;
 
 .nav-link-2{
   padding:0 !important;
+}
+
+.app-title {
+  font-family: 'Amatic SC', cursive;
+  font-size: 130px;
+  color: #3CE478;
+  margin-bottom: 25px;
+}
+.login-container{
+  background-color: #121314;
+}
+.login-button{
+  text-transform: uppercase;
+  background-color: #18ac4d;
+  color:white;
+}
+.login-button-link{
+  text-decoration: none;
+  color:#e8e6e3;
+  letter-spacing: 0.02857em;
+}
+.login-button:hover{
+  border: black solid 1px;
+  background-color: #18ac4d;
+}
+.layout-box{
+  background-color: #181717;
+  height: 100vh;
+  padding:0px;
+}
+.layout-main{
+  background-color: #181717;
+}
+.playlist-cards {
+  background-color: #181717;
+}
+.genres-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
