@@ -160,10 +160,11 @@ namespace SpotTest.Controllers
             {
                 "k-pop", "rock", "metal", "rap", "hip hop", "jazz", "pop"
             };
-            string genre ="";
+            string genre;
 
             foreach(var track in topTracks)
             {
+                genre = "";
                 for(int i=0; i< genres.Length; i++)
                 {  
                     if (track.Genre.Contains(genres[i], StringComparison.OrdinalIgnoreCase))
@@ -172,11 +173,18 @@ namespace SpotTest.Controllers
                         break;
                     }
                 }
-                var query = new DbQuery(_appDb);
-                var result = await query.FindAllAsync(genre);
-                Random random = new();
-                int index = random.Next(0, result.Count);
-                track.Comment = result[index].Komentarz;
+                if (genre != "")
+                {
+                    var query = new DbQuery(_appDb);
+                    var result = await query.FindAllAsync(genre);
+                    Random random = new();
+                    int index = random.Next(0, result.Count);
+                    track.Comment = result[index].Komentarz;
+                }
+                else
+                {
+                    track.Comment = "Brak komentarza";
+                }
             }
             return topTracks;
         }
