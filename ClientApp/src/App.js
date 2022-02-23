@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { Layout } from './components/Layout';
-import { FetchData } from './components/FetchData';
 
 
 import './custom.css'
 import { Login } from './components/Login';
-import { Container } from 'reactstrap';
 import { TopTracks } from './components/TopTracks';
 import { Playlists } from './components/Playlists';
 import { PlaylistDetails } from './components/PlaylistDetails';
@@ -36,7 +34,6 @@ export default class App extends Component {
       <Layout>
         <Route exact path='/' component={Playlists} />
         <Route path='/top' component={TopTracks} />
-        <Route path='/fetch-data' component={FetchData} />
         <Route path='/plays' component={Playlists} />
         <Route path='/play-details/:id' component={PlaylistDetails} />
         <Route path='/signin' component={() => { 

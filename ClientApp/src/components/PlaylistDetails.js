@@ -34,53 +34,28 @@ export class PlaylistDetails extends Component {
       }
     }
     let colours = this.generateColourPalette(length)
-    console.log(colours)
     chartPercent.push(otherCount)
     chartGenres.push("other")
     colours.push("#555555")
-    let tempTable = []
-    chartGenres.map((item) => (
-      tempTable.push(item + " 2137")
-    ))
+
     let options = {
       chart: {
         width: 900  ,
         type: 'donut',
-
       },
       labels: chartGenres,
-      fill: {
-        opacity: 1
-      },
-
-      yaxis: {
-        show: false
-      },
       legend: {
         position: 'right',
-        //customLegendItems:tempTable,
         labels: {
           colors: ['#fff']
         },
         width: 180
       },
       plotOptions: {
-        polarArea: {
-          rings: {
-            strokeWidth: 0
-          }
-        },
         pie: {
           dataLabels: {
             minAngleToShowLabel: 5
           },
-        }
-      },
-      theme: {
-        monochrome: {
-          enabled: false,
-          shadeTo: 'light',
-          shadeIntensity: 0.6
         }
       },
       colors: colours,

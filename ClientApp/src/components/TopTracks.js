@@ -78,12 +78,10 @@ class Textbar extends Component {
         this.state={inProp:true}
     
     }
-    textArray = ["Tekst 1", "Tekst 2", "Tekst 3", "Tekst 4", "Tekst 5", "Tekst 6", "Tekst 7", "Tekst 8", "Tekst 9","Tekst 10"]
-    welcomeText = "Tekst witający użytkownika"
-    goodbyeText = "Tekst dziękujący za użycie aplikacji"
+    welcomeText = "Witam w mojej pięknej i wspaniałej aplikacji"
+    goodbyeText = "Dziękuję za używanie mojej aplikacji"
     
-        //timeout (int) = czas po jakim inProp zostanie zmieniony w ms
-        //doIncrement (boolean) = czy zwiększyć appState 
+
         swapInPropAndIncrementAppState = (timeout, doIncrement) => {
             const timerID = setTimeout(() => {         
                 this.setState({inProp:!this.state.inProp});
@@ -95,10 +93,6 @@ class Textbar extends Component {
             return () => clearTimeout(timerID);
           };
     
-        //Generalnie działa tylko losowo jest bug wizualny, w którym w momencie zmiany stanu
-        //przez chwilę widać 'przebitkę' starego tekstu
-        //odświeżenie strony przeważnie pomaga
-        //potencjalnie spróbować ten Navbar przykryć czymś na okres zmiany stanu?  
         render() {
             let navbar
             if (this.props.appState == -1) {

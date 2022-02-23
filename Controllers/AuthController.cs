@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Mvc.Client.Extensions;
+//using Mvc.Client.Extensions;
 
 namespace SpotTest.Controllers
 {
@@ -12,12 +12,6 @@ namespace SpotTest.Controllers
         [HttpPost("~/signin")]
         public async Task<IActionResult> SignIn()
         {
-            // Note: the "provider" parameter corresponds to the external
-            // authentication provider choosen by the user agent.
-
-            // Instruct the middleware corresponding to the requested external identity
-            // provider to redirect the user agent to its own authorization endpoint.
-            // Note: the authenticationScheme parameter must match the value configured in Startup.cs
             return Challenge(new AuthenticationProperties { RedirectUri = "/", AllowRefresh = true }, "Spotify");
         }
 
@@ -25,9 +19,6 @@ namespace SpotTest.Controllers
         [HttpPost("~/signout")]
         public IActionResult SignOutCurrentUser()
         {
-            // Instruct the cookies middleware to delete the local cookie created
-            // when the user agent is redirected from the external identity provider
-            // after a successful authentication flow (e.g Google or Facebook).
             return SignOut(new AuthenticationProperties { RedirectUri = "/"},
                 CookieAuthenticationDefaults.AuthenticationScheme);
         }

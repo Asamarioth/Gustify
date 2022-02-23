@@ -7,7 +7,9 @@ export class Login extends Component{
         return (
             <div className="my-auto  login-container">
                 <h1 className='app-title'>GUSTIFY</h1>
-                <Button className='login-button'><NavLink tag={Link} className='login-button-link' to="/signin">Zaloguj</NavLink></Button>
+                <Button className='login-button'>
+                    <NavLink tag={Link} className='login-button-link' to="/signin">Zaloguj</NavLink>
+                    </Button>
 
             </div>
         )
